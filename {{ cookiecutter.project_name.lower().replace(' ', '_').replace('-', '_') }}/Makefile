@@ -190,6 +190,23 @@ update-desktop-database: ## Updates Linux database of .desktop shortcuts
 	update-desktop-database $(HOME)/.local/share/applications
 
 
+
+#-----------------------------------------------------------------------------------------
+# DJANGO
+#-----------------------------------------------------------------------------------------
+.PHONY: django-migrate
+django-migrate: ## Applies Django Migrations
+	poetry run python "$(PWD)/$(PROJECT)/manage.py" migrate
+	poetry run python "$(PWD)/$(PROJECT)/manage.py" makemigrations
+
+.PHONY: django-createsuperuser
+django-createsuperuser: ## Creates a Django Superuser
+	poetry run python "$(PWD)/$(PROJECT)/manage.py" createsuperuser
+
+.PHONY: django-runserver
+django-runserver: ## Runs Django Server
+	poetry run python $(PWD)/$(PROJECT)/manage.py runserver
+
 #-----------------------------------------------------------------------------------------
 # DOCKER
 #-----------------------------------------------------------------------------------------
