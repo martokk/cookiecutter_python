@@ -53,7 +53,12 @@ def remove_unused_files(directory: Path, module_name: str, need_to_remove_cli: b
         return [directory / module_name / "__main__.py"]
 
     def _docker_specific_files() -> List[Path]:
-        return [directory / "Dockerfile", directory / ".dockerignore"]
+        return [
+            directory / "Dockerfile",
+            directory / ".dockerignore",
+            directory / "docker-compose.yml",
+            directory / PROJECT_MODULE / "start.sh"
+        ]
 
     if need_to_remove_cli:
         files_to_delete.extend(_cli_specific_files())
