@@ -43,7 +43,8 @@ COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 # Copying in our app
 ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
-RUN chmod +x /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}/start.sh
+ADD /start.sh /start.sh
+RUN chmod +x /start.sh
 
 # venv already has runtime deps installed we get a quicker install
 WORKDIR $PYSETUP_PATH
@@ -78,7 +79,8 @@ COPY --from=builder-base $VENV_PATH $VENV_PATH
 
 # Copying in our app
 ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
-RUN chmod +x /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}/start.sh
+ADD /start.sh /start.sh
+RUN chmod +x /start.sh
 WORKDIR /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 
 EXPOSE 8002
