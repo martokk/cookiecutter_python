@@ -1,44 +1,3 @@
-# FROM python:3.7-alpine
-# COPY . /app
-# WORKDIR /app
-# RUN pip install .
-# CMD ["project_name"]
-
-
-# FROM python:{{ cookiecutter.minimal_python_version }}-slim-buster
-#
-# ENV LANG=C.UTF-8 \
-#   LC_ALL=C.UTF-8 \
-#   PATH="${PATH}:/root/.poetry/bin"
-#
-# RUN apt-get update && \
-#   apt-get install -y --no-install-recommends \
-#   curl \
-#   && rm -rf /var/lib/apt/lists/*
-#
-# COPY pyproject.toml ./
-#
-# # Install Poetry
-# RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
-#     cd /usr/local/bin && \
-#     ln -s /opt/poetry/bin/poetry && \
-#     poetry config virtualenvs.create false
-#
-# # Allow installing dev dependencies to run tests
-# ARG INSTALL_DEV=false
-# RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
-#
-# CMD mkdir -p /workspace
-# WORKDIR /workspace
-
-
-# Dockerfile
-# Uses multi-stage builds requiring Docker 17.05 or higher
-# See https://docs.docker.com/develop/develop-images/multistage-build/
-# Template https://github.com/michaeloliverx/python-poetry-docker-example/blob/master/docker/Dockerfile
-
-
-# -----------------------------------------------------------------------------
 # PYTHON-BASE - A python base with shared environment variables
 FROM python:{{ cookiecutter.minimal_python_version }}-slim-buster as python-base
 ENV PYTHONUNBUFFERED=1 \
@@ -83,19 +42,16 @@ COPY --from=builder-base $POETRY_HOME $POETRY_HOME
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 # Copying in our app
-ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /workspace
-RUN chmod +x /workspace/start.sh
+ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
+RUN chmod +x /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}/start.sh
 
 # venv already has runtime deps installed we get a quicker install
 WORKDIR $PYSETUP_PATH
 RUN poetry install
 
-WORKDIR /workspace
+WORKDIR /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 COPY . .
 
-ENV DJANGO_SUPERUSER_PASSWORD:-"admin" \
-  DJANGO_SUPERUSER_EMAIL:-"example@example.com" \
-  DJANGO_SUPERUSER_USERNAME:-"admin"
 EXPOSE 8002
 ENTRYPOINT ["/bin/sh", "-c", "./start.sh"]
 
@@ -121,13 +77,10 @@ FROM python-base as production
 COPY --from=builder-base $VENV_PATH $VENV_PATH
 
 # Copying in our app
-ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /workspace
-RUN chmod +x /workspace/start.sh
-WORKDIR /workspace
+ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
+RUN chmod +x /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}/start.sh
+WORKDIR /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 
-ENV DJANGO_SUPERUSER_PASSWORD:-"admin" \
-  DJANGO_SUPERUSER_EMAIL:-"example@example.com" \
-  DJANGO_SUPERUSER_USERNAME:-"admin"
 EXPOSE 8002
 ENTRYPOINT ["/bin/sh", "-c", "./start.sh"]
 
