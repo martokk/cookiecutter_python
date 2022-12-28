@@ -151,7 +151,7 @@ or install with `Poetry`
 poetry add {{ cookiecutter.project_name }}
 ```
 
-{% if cookiecutter.create_example_template == 'cli' -%}Then you can run
+{% if cookiecutter.create_cli_typer_templates == 'cli' -%}Then you can run
 
 ```bash
 {{ cookiecutter.project_name }} --help

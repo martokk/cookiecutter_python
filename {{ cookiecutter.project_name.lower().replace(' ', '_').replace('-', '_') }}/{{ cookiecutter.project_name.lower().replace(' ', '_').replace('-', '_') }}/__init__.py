@@ -1,4 +1,4 @@
-"""{{ cookiecutter.project_description }}"""
+"""A python project created by Martokk."""
 
 from importlib import metadata as importlib_metadata
 

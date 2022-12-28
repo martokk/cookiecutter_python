@@ -21,4 +21,4 @@ services:
       # - /home/ubuntu/volumes/{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}/db.sqlite3:/workspace/db.sqlite3
       - ./{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}:/{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
     ports:
-      - "8002:8002"
+      - "5000:5000"

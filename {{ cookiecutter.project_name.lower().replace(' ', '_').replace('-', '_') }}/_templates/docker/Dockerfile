@@ -53,7 +53,7 @@ RUN poetry install
 WORKDIR /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 COPY . .
 
-EXPOSE 8002
+EXPOSE 5000
 ENTRYPOINT ["/bin/sh", "-c", "./start.sh"]
 
 
@@ -83,6 +83,6 @@ ADD /start.sh /start.sh
 RUN chmod +x /start.sh
 WORKDIR /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 
-EXPOSE 8002
+EXPOSE 5000
 ENTRYPOINT ["/bin/sh", "-c", "./start.sh"]
 

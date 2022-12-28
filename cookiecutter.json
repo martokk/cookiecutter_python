@@ -9,8 +9,13 @@
   "email": "hello@{{ cookiecutter.organization.lower().replace(' ', '-') }}.com",
   "version": "0.0.1",
   "line_length": 100,
-  "create_example_template": ["cli", "none"],
-  "create_dockerfile_template": ["yes", "no"],
+
+  "create_container_docker_templates": ["yes", "no"],
+  "create_cli_typer_templates": ["yes", "no"],
+  "create_db_sqlmodel_templates": ["yes", "no"],
+  "create_server_fastapi_templates": ["yes", "no"],
+  "fastapi_sqlmodel_template_model_name": "user",
+
   "_copy_without_render": [
     "poetry.lock"
   ]

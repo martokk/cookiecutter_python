@@ -1,16 +1,21 @@
 """This module is called after project is created."""
 from typing import List
 
+import shutil
 import textwrap
 from pathlib import Path
-from shutil import move, rmtree
 
 # Project root directory
 PROJECT_DIRECTORY = Path.cwd().absolute()
 PROJECT_NAME = "{{ cookiecutter.project_name }}"
 PROJECT_MODULE = "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}"
-CREATE_EXAMPLE_TEMPLATE = "{{ cookiecutter.create_example_template }}"
-CREATE_DOCKERFILE_TEMPLATE = "{{ cookiecutter.create_dockerfile_template }}"
+
+CREATE_CONTAINER_DOCKER_TEMPLATES = "{{ cookiecutter.create_container_docker_templates }}" == "yes"
+CREATE_CLI_TYPER_TEMPLATES = "{{ cookiecutter.create_cli_typer_templates }}" == "yes"
+CREATE_DB_SQLMODEL_TEMPLATES = "{{ cookiecutter.create_db_sqlmodel_templates }}" == "yes"
+CREATE_SERVER_FASTAPI_TEMPLATES = "{{ cookiecutter.create_server_fastapi_templates }}" == "yes"
+FASTAPI_SQLMODEL_TEMPLATE_MODEL_NAME = "{{ cookiecutter.fastapi_sqlmodel_template_model_name }}"
+
 
 # Values to generate correct license
 LICENSE = "{{ cookiecutter.license }}"
@@ -34,40 +39,42 @@ def generate_license(directory: Path, licence: str) -> None:
         directory: path to the project directory
         licence: chosen licence
     """
-    move(str(directory / "_licences" / f"{licence}.txt"), str(directory / "LICENSE"))
-    rmtree(str(directory / "_licences"))
+    shutil.move(str(directory / "_licences" / f"{licence}.txt"), str(directory / "LICENSE"))
+    shutil.rmtree(str(directory / "_licences"))
 
 
-def remove_unused_files(directory: Path, module_name: str, need_to_remove_cli: bool, need_to_remove_docker: bool) -> None:
-    """Remove unused files.
+def generate_starter_templates(
+    directory: Path,
+    module_name: str,
+    create_container_docker_templates: bool,
+    create_cli_typer_templates: bool,
+    create_db_sqlmodel_templates: bool,
+    create_server_fastapi_templates: bool,
+) -> None:
 
-    Args:
-        directory: path to the project directory
-        module_name: project module name
-        need_to_remove_cli: flag for removing CLI related files
-        need_to_remove_docker: flag for removing Docker related files
-    """
-    files_to_delete: List[Path] = []
+    # Copy Templates to Main Project Folder
+    project_folder = directory
+    templates_folder = project_folder / "_templates"
+    module_folder = directory / module_name
 
-    def _cli_specific_files() -> List[Path]:
-        return [directory / module_name / "__main__.py"]
+    if create_container_docker_templates:
+        shutil.copytree(templates_folder / "docker", project_folder, dirs_exist_ok=True)
 
-    def _docker_specific_files() -> List[Path]:
-        return [
-            directory / "Dockerfile",
-            directory / ".dockerignore",
-            directory / "docker-compose.yml",
-            directory / PROJECT_MODULE / "start.sh"
-        ]
+    if create_cli_typer_templates:
+        shutil.copytree(templates_folder / "typer", module_folder, dirs_exist_ok=True)
 
-    if need_to_remove_cli:
-        files_to_delete.extend(_cli_specific_files())
+    if create_db_sqlmodel_templates:
+        shutil.copytree(templates_folder / "sqlmodel", module_folder, dirs_exist_ok=True)
 
-    if need_to_remove_docker:
-        files_to_delete.extend(_docker_specific_files())
+    if create_server_fastapi_templates:
+        shutil.copytree(templates_folder / "fastapi", module_folder, dirs_exist_ok=True)
 
-    for path in files_to_delete:
-        path.unlink()
+    # Copy "combination" Templates to Main Project Folder
+    if create_db_sqlmodel_templates and create_server_fastapi_templates:
+        shutil.copytree(templates_folder / "__fastapi_sqlmodel", module_folder, dirs_exist_ok=True)
+
+    # Delete Templates Folder
+    shutil.rmtree(templates_folder)
 
 
 def print_further_instructions(project_name: str, github: str) -> None:
@@ -110,11 +117,13 @@ def print_further_instructions(project_name: str, github: str) -> None:
 
 def main() -> None:
     generate_license(directory=PROJECT_DIRECTORY, licence=licences_dict[LICENSE])
-    remove_unused_files(
+    generate_starter_templates(
         directory=PROJECT_DIRECTORY,
         module_name=PROJECT_MODULE,
-        need_to_remove_cli=str(CREATE_EXAMPLE_TEMPLATE) != "cli",
-        need_to_remove_docker=str(CREATE_DOCKERFILE_TEMPLATE) == "no",
+        create_container_docker_templates=CREATE_CONTAINER_DOCKER_TEMPLATES,
+        create_cli_typer_templates=CREATE_CLI_TYPER_TEMPLATES,
+        create_db_sqlmodel_templates=CREATE_DB_SQLMODEL_TEMPLATES,
+        create_server_fastapi_templates=CREATE_SERVER_FASTAPI_TEMPLATES,
     )
     print_further_instructions(project_name=PROJECT_NAME, github=GITHUB_USER)
 
