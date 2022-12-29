@@ -60,8 +60,8 @@ ENTRYPOINT ["/bin/sh", "-c", "./start.sh"]
 # -----------------------------------------------------------------------------
 # LINT - 'lint' stage runs black and isort. Running in check mode means build will fail if any linting errors occur
 FROM development AS lint
-RUN black --config ./pyproject.toml --check app tests
-RUN isort --settings-path ./pyproject.toml --recursive --check-only
+RUN black --config ./pyproject.toml --check {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} tests
+RUN isort . --settings-path ./pyproject.toml --check-only
 CMD ["tail", "-f", "/dev/null"]
 
 

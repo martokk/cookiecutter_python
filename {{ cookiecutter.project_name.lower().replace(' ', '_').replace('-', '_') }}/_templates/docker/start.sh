@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
+python -m {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
