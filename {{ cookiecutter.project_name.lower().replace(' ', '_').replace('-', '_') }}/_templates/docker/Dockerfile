@@ -81,7 +81,6 @@ COPY --from=builder-base $VENV_PATH $VENV_PATH
 ADD /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 ADD /start.sh /start.sh
 RUN chmod +x /start.sh
-WORKDIR /{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 
 EXPOSE 5000
 ENTRYPOINT ["/bin/sh", "-c", "./start.sh"]
