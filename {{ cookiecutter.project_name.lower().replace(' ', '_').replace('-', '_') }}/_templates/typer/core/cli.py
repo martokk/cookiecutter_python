@@ -47,4 +47,7 @@ def main(
     # OR
     
     # Start App
+    # logger.info("Starting App...")
     # app()
+    
+    raise NotImplementedError("cli.py:main lines 43 to 52 to setup the app.")
