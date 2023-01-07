@@ -1,0 +1,19 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "{{ cookiecutter.project_name }}"
+  project_description: "{{ cookiecutter.project_description }}"
+  organization: "{{ cookiecutter.organization }}"
+  license: "{{ cookiecutter.license }}"
+  minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
+  github_name: "{{ cookiecutter.github_name }}"
+  email: "{{ cookiecutter.email }}"
+  version: "{{ cookiecutter.version }}"
+  line_length: "{{ cookiecutter.line_length }}"
+  create_container_docker_templates: "{{ cookiecutter.create_container_docker_templates }}"
+  create_cli_typer_templates: "{{ cookiecutter.create_cli_typer_templates }}"
+  create_db_sqlmodel_templates: "{{ cookiecutter.create_db_sqlmodel_templates }}"
+  create_server_fastapi_templates: "{{ cookiecutter.create_server_fastapi_templates }}"
+  fastapi_sqlmodel_template_model_name: "{{ cookiecutter.fastapi_sqlmodel_template_model_name }}"
+  project_module: "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}"
+  project_title: "{{ cookiecutter.project_name.title().replace('_', ' ').replace('-', ' ') }}"
