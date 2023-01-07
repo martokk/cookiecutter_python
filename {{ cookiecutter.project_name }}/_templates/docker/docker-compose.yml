@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  { { cookiecutter.project_module } }:
+    container_name: "{{ cookiecutter.project_module }}"
+    image: "{{ cookiecutter.project_module }}"
+    build:
+      context: .
+      # context: https://github.com/martokk/{{ cookiecutter.project_module }}.git#main
+      target: production
+    restart: unless-stopped
+    # depends_on:
+    #   - duckdns
+    env_file:
+      # - /home/ubuntu/volumes/{{ cookiecutter.project_module }}/.env
+      - ./{{ cookiecutter.project_module }}/.env
+    volumes:
+      # - /home/ubuntu/volumes/{{ cookiecutter.project_module }}/.env:/workspace/.env
+      # - /home/ubuntu/volumes/{{ cookiecutter.project_module }}/media:/workspace/media
+      # - /home/ubuntu/volumes/{{ cookiecutter.project_module }}/logs:/workspace/logs
+      # - /home/ubuntu/volumes/{{ cookiecutter.project_module }}/db.sqlite3:/workspace/db.sqlite3
+      - ./{{ cookiecutter.project_module }}:/{{ cookiecutter.project_module }}
+    ports:
+      - "5000:5000"

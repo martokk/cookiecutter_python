@@ -8,7 +8,7 @@ from pathlib import Path
 # Project root directory
 PROJECT_DIRECTORY = Path.cwd().absolute()
 PROJECT_NAME = "{{ cookiecutter.project_name }}"
-PROJECT_MODULE = "{{ cookiecutter.__project_module }}"
+PROJECT_MODULE = "{{ cookiecutter.project_module }}"
 
 CREATE_CONTAINER_DOCKER_TEMPLATES = "{{ cookiecutter.create_container_docker_templates }}" == "yes"
 CREATE_CLI_TYPER_TEMPLATES = "{{ cookiecutter.create_cli_typer_templates }}" == "yes"

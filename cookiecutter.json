@@ -15,8 +15,8 @@
   "create_db_sqlmodel_templates": ["yes", "no"],
   "create_server_fastapi_templates": ["yes", "no"],
   "fastapi_sqlmodel_template_model_name": "user",
-  "_project_module": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-  "_project_title": "{{ cookiecutter.project_name.title().replace('_', ' ').replace('-', ' ') }}",
+  "project_module": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_title": "{{ cookiecutter.project_name.title().replace('_', ' ').replace('-', ' ') }}",
 
   "_copy_without_render": [
     "poetry.lock"

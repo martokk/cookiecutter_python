@@ -75,7 +75,7 @@ formatting: codestyle ## Apply Formatting via PyUpgrade, ISort, Black.
 
 .PHONY: codestyle
 codestyle: ## Apply Formatting via PyUpgrade, ISort, Black.
-	poetry run pyupgrade --exit-zero-even-if-changed --py310-plus **/*.py
+	poetry run pyupgrade --exit-zero-even-if-changed --py{{ cookiecutter.minimal_python_version.replace('.', '') }}-plus **/*.py
 	poetry run isort --settings-path pyproject.toml ./
 	poetry run black --config pyproject.toml ./
 
