@@ -15,5 +15,3 @@ default_context:
   create_db_sqlmodel_templates: "{{ cookiecutter.create_db_sqlmodel_templates }}"
   create_server_fastapi_templates: "{{ cookiecutter.create_server_fastapi_templates }}"
   fastapi_sqlmodel_template_model_name: "{{ cookiecutter.fastapi_sqlmodel_template_model_name }}"
-  __project_module: "{{ cookiecutter.__project_module }}"
-  __project_title: "{{ cookiecutter.__project_title }}"
