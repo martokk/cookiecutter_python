@@ -18,6 +18,8 @@
 
   "_copy_without_render": [
     "poetry.lock"
-  ]
+  ],
 
+  "__project_module": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "__project_title": "{{ cookiecutter.project_name.title().replace('_', ' ').replace('-', ' ') }}"
 }
