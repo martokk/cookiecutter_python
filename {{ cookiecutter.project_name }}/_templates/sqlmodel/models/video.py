@@ -2,7 +2,6 @@ from typing import Any
 
 import datetime
 
-from dateutil import tz
 from pydantic import root_validator
 from sqlmodel import Field, SQLModel
 
@@ -35,14 +34,14 @@ class Video(VideoBase, table=True):
             **values,
             "url": sanitized_url,
             "id": video_id,
-            "updated_at": datetime.datetime.now(tz=tz.tzutc()),
+            "updated_at": datetime.datetime.now(tz=datetime.timezone.utc),
         }
 
 
 class VideoCreate(VideoBase):
     @root_validator
     def create_updated_at(cls, values: dict[str, Any | None]) -> dict[str, Any]:
-        values["updated_at"] = datetime.datetime.now(tz=tz.tzutc())
+        values["updated_at"] = datetime.datetime.now(tz=datetime.timezone.utc)
         return values
 
 

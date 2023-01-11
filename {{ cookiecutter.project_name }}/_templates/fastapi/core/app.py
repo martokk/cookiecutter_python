@@ -1,15 +1,16 @@
 from fastapi import FastAPI
 
 # from fastapi_utils.tasks import repeat_every
-from loguru import logger
+from {{ cookiecutter.project_module }}.core.logger import logger
+from {{ cookiecutter.project_module }}.core.notify import notify
 
 from {{ cookiecutter.project_module }}.api.v1.api import api_router
 from {{ cookiecutter.project_module }}.db.database import create_db_and_tables
 from {{ cookiecutter.project_module }}.paths import LOG_FILE
+from {{ cookiecutter.project_module }}.constants import PACKAGE_NAME
+from {{ cookiecutter.project_module }}.config import ENV_NAME
 
 # Configure Loguru Logger
-logger.add(LOG_FILE, level="TRACE", rotation="50 MB")
-
 # Initialize FastAPI App
 
 app = FastAPI()
@@ -26,7 +27,8 @@ async def on_startup() -> None:
     """
     logger.info("--- Start FastAPI ---")
     logger.debug("Starting FastAPI App...")
-    return await create_db_and_tables()
+    await create_db_and_tables()
+    await notify(text=f"{PACKAGE_NAME}('{ENV_NAME}') started.")
 
 
 # @app.on_event("startup")  # type: ignore

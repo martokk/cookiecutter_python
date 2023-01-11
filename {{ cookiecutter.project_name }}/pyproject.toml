@@ -44,9 +44,10 @@ python = "^{{ cookiecutter.minimal_python_version }}"
 loguru = "^0.6.0"
 pyyaml = "^6.0"
 python-dotenv = "^0.21.0"
-python-dateutil = "^2.8.2"
 shortuuid = "^1.0.11"
 httpx = "^0.23.3"
+wheel = "^0.38.1"
+python-telegram-bot = "^20.0"
 
 {% if cookiecutter.minimal_python_version == '3.7' -%}importlib_metadata = {version = "^4.5.0", python = "<3.8"}{%- endif -%}
 {%+ if cookiecutter.create_cli_typer_templates == 'yes' %}
@@ -144,7 +145,7 @@ warn_redundant_casts = true
 warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
-warn_unused_ignores = true
+warn_unused_ignores = false
 exclude = "typings"
 
 [[tool.mypy.overrides]]

@@ -1,12 +1,7 @@
 import uvicorn
-from loguru import logger
-from rich.logging import RichHandler
+from {{ cookiecutter.project_module }}.core.logger import logger
 
 from {{ cookiecutter.project_module }}.config import SERVER_IP, SERVER_PORT
-
-handler = RichHandler(level="DEBUG")
-logger.add(handler)
-logger.bind()
 
 
 def start_server() -> None:

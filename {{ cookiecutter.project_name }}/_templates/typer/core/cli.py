@@ -1,5 +1,5 @@
 import typer
-from loguru import logger
+from {{ cookiecutter.project_module }}.core.logger import logger
 from rich.console import Console
 
 from {{ cookiecutter.project_module }} import version

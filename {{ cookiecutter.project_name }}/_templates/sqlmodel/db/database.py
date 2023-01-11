@@ -1,4 +1,4 @@
-from loguru import logger
+from {{ cookiecutter.project_module }}.core.logger import logger
 from sqlmodel import SQLModel, create_engine
 
 from {{ cookiecutter.project_module }}.config import DATABASE_ECHO
